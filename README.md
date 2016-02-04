@@ -1,88 +1,15 @@
-# aurelia-ui-virtualization
+# aurelia-skeleton-navigation
 
 [![ZenHub](https://raw.githubusercontent.com/ZenHubIO/support/master/zenhub-badge.png)](https://zenhub.io)
 [![Join the chat at https://gitter.im/aurelia/discuss](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/aurelia/discuss?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-This library is part of the [Aurelia](http://www.aurelia.io/) platform and contains a plugin that provides a virtualized repeater and other virtualization services. This plugin enables "virtualization" of list through a new `virtual-repeat.for`. When used, the list "virtually" as tens or hundred of thousands of rows, but the DOM only actually has rows for what is visible. It could be only tens or of items. This allows rendering of massive lists of data with amazing performance. It works like repeat.for, it just creates a scrolling area and manages the list using UI virtualization techniques.
+This skeleton is part of the [Aurelia](http://www.aurelia.io/) platform. It sets up a standard navigation-style app using gulp to build your ES6 code with the Babel compiler. Karma/Protractor/Jasmine testing is also configured.
 
 > To keep up to date on [Aurelia](http://www.aurelia.io/), please visit and subscribe to [the official blog](http://blog.durandal.io/). If you have questions, we invite you to [join us on Gitter](https://gitter.im/aurelia/discuss). If you would like to have deeper insight into our development process, please install the [ZenHub](https://zenhub.io) Chrome Extension and visit any of our repository's boards. You can get an overview of all Aurelia work by visiting [the framework board](https://github.com/aurelia/framework#boards).
 
-## Installation
+## Running The App
 
-Install via JSPM
-
-```javascript
-jspm install aurelia-ui-virtualization
-```
-
-Load the plugin
-
-```javascript
-export function configure(aurelia) {
-  aurelia.use
-    .standardConfiguration()
-    .developmentLogging()
-    .plugin('aurelia-ui-virtualization'); // Add this line to load the plugin
-
-  aurelia.start().then(a => a.setRoot());
-}
-```
-
-## Use the plugin
-
-To get started use the provided CustomElement `VirtualList` and bind an array to its `items` attribute. Inside of the `VirtualList` you use `template-parts` in order to provide the virtual repeater with your template
-
-```html
-<template>
-  <virtual-list items.bind="myList">
-    <template replace-part="item-template">      
-          ${$index} ${item}        
-    </template>
-  </virtual-list>  
-</template>
-```
-
-```javascript
-export class MyVirtualList {
-    myList = ['Foo', 'Bar', 'Baz'];
-}
-```
-
-The container, in this case the `VirtualList` element, needs to have a defined height and block position. Also the repeated rows need to have equal height throughout the list
-
-```css
-virtual-list {
-  height: 500px;
-  display: block;
-  overflow: scroll;
-  -webkit-overflow-scrolling: touch; /* for momentum scroll on iOS */
-}
-```
-
-## [Demo](http://martingust.github.io/virtual-list/)
-
-## Polyfills
-
-* None
-
-## Dependencies
-
-* [aurelia-templating](https://github.com/aurelia/templating)
-* [aurelia-dependency-injection](https://github.com/aurelia/dependency-injection)
-* [aurelia-binding](https://github.com/aurelia/binding)
-* [aurelia-templating-resource](https://github.com/aurelia/templating-resources)
-
-## Used By
-
-This library is used directly by applications only.
-
-## Platform Support
-
-This library can be used in the **browser** only.
-
-## Building The Code
-
-To build the code, follow these steps.
+To run the app, follow these steps.
 
 1. Ensure that [NodeJS](http://nodejs.org/) is installed. This provides the platform on which the build tooling runs.
 2. From the project folder, execute the following command:
@@ -90,21 +17,79 @@ To build the code, follow these steps.
   ```shell
   npm install
   ```
-3. Ensure that [Gulp](http://gulpjs.com/) is installed. If you need to install it, use the following command:
+3. Ensure that [Gulp](http://gulpjs.com/) is installed globally. If you need to install it, use the following command:
 
   ```shell
   npm install -g gulp
   ```
-4. To build the code, you can now run:
+  > **Note:** Gulp must be installed globally, but a local version will also be installed to ensure a compatible version is used for the project.
+4. Ensure that [jspm](http://jspm.io/) is installed globally. If you need to install it, use the following command:
 
   ```shell
-  gulp build
+  npm install -g jspm
   ```
-5. You will find the compiled code in the `dist` folder, available in three module formats: AMD, CommonJS and ES6.
+  > **Note:** jspm must be installed globally, but a local version will also be installed to ensure a compatible version is used for the project.
 
-6. See `gulpfile.js` for other tasks related to generating the docs and linting.
+  > **Note:** jspm queries GitHub to install semver packages, but GitHub has a rate limit on anonymous API requests. It is advised that you configure jspm with your GitHub credentials in order to avoid problems. You can do this by executing `jspm registry config github` and following the prompts. If you choose to authorize jspm by an access token instead of giving your password (see GitHub `Settings > Personal Access Tokens`), `public_repo` access for the token is required.
+5. Install the client-side dependencies with jspm:
 
-## Running The Tests
+  ```shell
+  jspm install -y
+  ```
+  >**Note:** Windows users, if you experience an error of "unknown command unzip" you can solve this problem by doing `npm install -g unzip` and then re-running `jspm install`.
+6. To run the app, execute the following command:
+
+  ```shell
+  gulp watch
+  ```
+7. Browse to [http://localhost:9000](http://localhost:9000) to see the app. You can make changes in the code found under `src` and the browser should auto-refresh itself as you save files.
+
+> The Skeleton App uses [BrowserSync](http://www.browsersync.io/) for automated page refreshes on code/markup changes concurrently across multiple browsers. If you prefer to disable the mirroring feature set the [ghostMode option](http://www.browsersync.io/docs/options/#option-ghostMode) to false
+
+## Running The App under Electron
+
+To run the app under [Electron](http://electron.atom.io), follow these steps.
+
+1. Install [Electron](http://electron.atom.io)
+
+  ```shell
+  npm install electron-prebuilt -g
+  ```
+2. To start the app, execute the following command:
+
+  ```shell
+  electron index.js
+  ```
+>**Note:** If you use electron every time or are packaging and so-forth, Then change this line in package.json from
+`"main": "dist/main.js",` to `"main": "index.js",`
+Build the app (this will give you a dist directory)
+```shell
+gulp build
+```
+To start the app, execute the following command:
+```shell
+   electron .
+```
+
+
+## Bundling
+Bundling is performed by [Aurelia Bundler](http://github.com/aurelia/bundler). A gulp task is already configured for that. Use the following command to bundle the app:
+
+  ```shell
+    gulp bundle
+  ```
+
+You can also unbundle using the command bellow:
+
+  ```shell
+  gulp unbundle
+  ```
+#### Configuration
+The configuration is done by ```bundles.json``` file.
+##### Optional
+Under ```options``` of ```dist/aurelia``` add ```rev: true``` to add bundle file revision/version.
+
+## Running The Unit Tests
 
 To run the unit tests, first ensure that you have followed the steps above in order to install all dependencies and successfully build the library. Once you have done that, proceed with these additional steps:
 
@@ -113,19 +98,50 @@ To run the unit tests, first ensure that you have followed the steps above in or
   ```shell
   npm install -g karma-cli
   ```
-2. Ensure that [jspm](http://jspm.io/) is installed. If you need to install it, use the following commnand:
+2. Install Aurelia libs for test visibility:
 
-  ```shell
-  npm install -g jspm
-  ```
-3. Install the client-side dependencies with jspm:
-
-  ```shell
-  jspm install
-  ```
-
-4. You can now run the tests with this command:
+```shell
+jspm install aurelia-framework
+jspm install aurelia-http-client
+jspm install aurelia-router
+```
+3. You can now run the tests with this command:
 
   ```shell
   karma start
   ```
+
+## Running The E2E Tests
+Integration tests are performed with [Protractor](http://angular.github.io/protractor/#/).
+
+1. Place your E2E-Tests into the folder ```test/e2e/src```
+2. Install the necessary webdriver
+
+  ```shell
+  gulp webdriver-update
+  ```
+
+3. Configure the path to the webdriver by opening the file ```protractor.conf.js``` and adjusting the ```seleniumServerJar``` property. Typically its only needed to adjust the version number.
+
+4. Make sure your app runs and is accessible
+
+  ```shell
+  gulp watch
+  ```
+
+5. In another console run the E2E-Tests
+
+  ```shell
+  gulp e2e
+  ```
+
+## Exporting bundled production version
+A gulp task is already configured for that. Use the following command to export the app:
+
+  ```shell
+    gulp export
+  ```
+The app will be exported into ```export``` directory preserving the directory structure.
+#### Configuration
+The configuration is done by ```bundles.json``` file.
+In addition, ```export.json``` file is available for including individual files.

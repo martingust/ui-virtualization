@@ -1,20 +1,11 @@
 module.exports = {
-  filename: '',
-  filenameRelative: '',
-  modules: '',
-  sourceMap: true,
-  sourceMapName: '',
-  sourceRoot: '',
-  moduleRoot: '',
+  modules: 'system',
   moduleIds: false,
-  experimental: false,
   comments: false,
   compact: false,
-  code:true,
-  stage:2,
-  loose: "all",
+  stage: 2,
   optional: [
-    "es7.decorators",
-    "es7.classProperties"
+    'es7.decorators',
+    'es7.classProperties'
   ]
 };
