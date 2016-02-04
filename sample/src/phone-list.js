@@ -6,7 +6,7 @@ export class PhoneList {
     this.numberOfItems = 100;
     this.isSelected = false;
     this.isVisible = true;
-    this.viewStrategy = 'div_';
+    this.viewStrategy = 'div';
   }
 
   setViewStrategy(strategy){
